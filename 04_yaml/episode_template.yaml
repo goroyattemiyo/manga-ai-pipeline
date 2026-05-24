@@ -1,1 +1,383 @@
-# 準備中
+# episode_template.yaml
+# 画像生成AI向けコマ仕様書テンプレート
+#
+# 使い方：
+# 1. 【】内を自分の作品に書き換える
+# 2. 不要なキーはコメントアウトまたは削除する
+# 3. 完成したYAMLを 05_image_generation/gpts_system_prompt.md のGPTsに貼る
+#
+# このファイルはシナリオ生成AIが自動出力する形式と同じです
+# 手動で記入する場合の参照用テンプレートとしても使えます
+
+episode: [話数]
+title: "[タイトル]"
+total_pages: [ページ数]
+
+# ------------------------------------------------
+# 参照画像
+# GPTsが生成前に添付を求める画像のリスト
+# ------------------------------------------------
+references:
+  characters:
+    - id: [chara_a]
+      image: [chara_a_ref.png]
+      note: "[キャラAの顔・頭身・衣装の基準]"
+    - id: [chara_b]
+      image: [chara_b_ref.png]
+      note: "[キャラBの顔・外見の基準]"
+    # 追加キャラが登場する話のみ追加
+    # - id: [chara_c]
+    #   image: [chara_c_ref.png]
+    #   note: "[キャラCの外見の基準]"
+  props:
+    # 話に固有のアイテム参照画像がある場合のみ追加
+    # - id: [prop_name]
+    #   image: [prop_ref.png]
+    #   note: "[アイテムの見た目の基準]"
+    # 不要な場合：
+    []
+  backgrounds:
+    # 固有の背景参照画像が必要な場合のみ追加
+    # 不要な場合：
+    []
+
+# ------------------------------------------------
+# 全ページ共通NG
+# 画像生成AIに絶対にやらせないことのリスト
+# ------------------------------------------------
+global_ng:
+  - yaml未記載のキャラ・アイテム・背景要素を補完しない
+  - "[キャラAのNG1。例：頭身を○頭身より高くしない]"
+  - "[キャラAのNG2。例：衣装を変えない]"
+  - "[キャラBのNG1。例：顔に肌色を入れない]"
+  - "[その他の作品全体のNG]"
+
+# ------------------------------------------------
+# ページ定義
+# ------------------------------------------------
+pages:
+
+  # =====================================
+  # P1（1ページ目）
+  # =====================================
+  - page: 1
+    # headerはP1のみ記載する
+    header: "[作品タイトル] EP.[話数]　[話タイトル]"
+    layout: "[コマ数と配置の説明。例：4コマ・上2下2の均等配置]"
+    # frame: black=現在シーン / white=回想中 / black_flash=回想終了暗転
+    frame: black
+    scene: "[場所・時間帯。例：主人公の部屋・昼]"
+    characters_in_page: [[chara_a], [chara_b]]
+    references_required: [[chara_a], [chara_b]]
+    page_ng:
+      - "[このページで補完されやすいリスク。例：背景に余計なキャラを描かない]"
+
+    panels:
+
+      - panel: 1
+        size: large   # large / medium / small
+        # frameはページ全体と異なる場合のみ記載
+        # frame: white
+        characters: [[chara_a]]
+        action: "[キャラの動作・状況を1行で。例：部屋のソファに寝転んでスマホを見ている]"
+        expression: "[表情・感情。例：だらけた顔・無気力]"
+        dialogue: "[セリフ。セリフなしの場合は null]"
+        narration: null   # ナレーション枠がある場合のみ記載
+        effects: []       # 漫画効果リスト。なければ []
+        bg: "[背景の説明。例：シンプルな室内・ソファと窓]"
+
+      - panel: 2
+        size: medium
+        characters: [[chara_a], [chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: null
+        narration: null
+        effects: []
+        bg: "[背景]"
+
+      - panel: 3
+        size: medium
+        characters: [[chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: null
+        effects:
+          - "[効果。例：汗をひとつ浮かべる]"
+        bg: null
+
+      - panel: 4
+        size: small
+        characters: [[chara_a]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: null
+
+  # =====================================
+  # P2（2ページ目）
+  # =====================================
+  - page: 2
+    layout: "[コマ数と配置]"
+    frame: black
+    scene: "[場所・時間帯]"
+    characters_in_page: [[chara_a], [chara_b]]
+    references_required: [[chara_a], [chara_b]]
+    page_ng: []
+
+    panels:
+
+      - panel: 1
+        size: medium
+        characters: [[chara_a]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: "[背景]"
+
+      - panel: 2
+        size: medium
+        characters: [[chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: null
+        effects:
+          - "[効果]"
+        bg: null
+
+      - panel: 3
+        size: large
+        characters: [[chara_a], [chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: "[背景]"
+
+  # =====================================
+  # P3（3ページ目）— ピーク前半
+  # =====================================
+  - page: 3
+    layout: "[コマ数と配置]"
+    frame: black
+    scene: "[場所・時間帯]"
+    characters_in_page: [[chara_a], [chara_b]]
+    references_required: [[chara_a], [chara_b]]
+    page_ng: []
+
+    panels:
+
+      - panel: 1
+        size: medium
+        characters: [[chara_a]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: "[背景]"
+
+      - panel: 2
+        size: small
+        characters: [[chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: null
+        effects: []
+        bg: null
+
+      - panel: 3
+        size: medium
+        characters: [[chara_a]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects:
+          - "[効果]"
+        bg: null
+
+      - panel: 4
+        size: large
+        characters: [[chara_a], [chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: "[背景]"
+
+  # =====================================
+  # P4（4ページ目）— ピーク後半
+  # =====================================
+  - page: 4
+    layout: "[コマ数と配置]"
+    frame: black
+    scene: "[場所・時間帯]"
+    characters_in_page: [[chara_a], [chara_b]]
+    references_required: [[chara_a], [chara_b]]
+    page_ng: []
+
+    panels:
+
+      - panel: 1
+        size: medium
+        characters: [[chara_a]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: "[背景]"
+
+      - panel: 2
+        size: medium
+        characters: [[chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: null
+        effects:
+          - "[効果]"
+        bg: null
+
+      - panel: 3
+        size: small
+        characters: [[chara_a]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: null
+
+      - panel: 4
+        size: small
+        characters: [[chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: null
+        effects:
+          - "[効果]"
+        bg: null
+
+      - panel: 5
+        size: medium
+        characters: [[chara_a], [chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: "[背景]"
+
+  # =====================================
+  # P5（5ページ目）— 落差・切り替わり
+  # =====================================
+  - page: 5
+    layout: "[コマ数と配置]"
+    frame: black
+    scene: "[場所・時間帯]"
+    characters_in_page: [[chara_a], [chara_b]]
+    references_required: [[chara_a], [chara_b]]
+    page_ng: []
+
+    panels:
+
+      - panel: 1
+        size: medium
+        characters: [[chara_a]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: "[背景]"
+
+      - panel: 2
+        size: medium
+        characters: [[chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: null
+        effects: []
+        bg: null
+
+      - panel: 3
+        size: large
+        characters: [[chara_a], [chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: "[背景]"
+
+  # =====================================
+  # P6（最終ページ）— オチ
+  # =====================================
+  - page: 6
+    layout: "[大ゴマ1＋小コマ2〜3の構成]"
+    frame: black
+    scene: "[場所・時間帯]"
+    characters_in_page: [[chara_a], [chara_b]]
+    references_required: [[chara_a], [chara_b]]
+    page_ng: []
+
+    panels:
+
+      - panel: 1
+        size: small
+        characters: [[chara_a]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: "[セリフ]"
+        effects: []
+        bg: null
+
+      - panel: 2
+        size: small
+        characters: [[chara_b]]
+        action: "[動作・状況]"
+        expression: "[表情]"
+        dialogue: null
+        effects:
+          - "[効果]"
+        bg: null
+
+      # オチの大ゴマ
+      - panel: 3
+        size: large
+        characters: [[chara_a], [chara_b]]
+        action: "[オチの動作・状況]"
+        expression: "[表情]"
+        dialogue: "[オチのセリフ]"
+        effects: []
+        bg: "[背景]"
+
+        # キャラCが遠くからツッコミを入れる場合（オプション）
+        # narrator_voice:
+        #   speaker: "[chara_c]（遠くで）"
+        #   text: "……[セリフ]。"
+        #   bubble_style: "枠なし・尻尾なし・ページ端に小さく"
+
+# ------------------------------------------------
+# 特殊キー（必要な場合のみ使う）
+# ------------------------------------------------
+#
+# 【回想シーン】
+# 回想中のコマ：frame: white
+# 回想終了コマ：frame: black_flash
+#
+# 【ナレーション枠】
+# narration: "あのとき――"
+#
+# 【心の声】
+# inner_voice:
+#   text: "[セリフ]"
+#   style: 雲形フキダシ（心の声）
+#
+# 【声のみ・姿なしのキャラ】
+# offscreen_voice:
+#   speaker: "[キャラ名]（声のみ）"
+#   text: "[セリフ]"
+#   bubble_style: 角ばった吹き出し
+#
+# 【読者向けツッコミ役（遠くから独り言）】
+# narrator_voice:
+#   speaker: "[キャラC]（遠くで）"
+#   text: "……[セリフ]。"
+#   bubble_style: "枠なし・尻尾なし・ページ端に小さく"

@@ -71,6 +71,8 @@ manga-ai-pipeline/
 ├── 05_image_generation/
 │   └── gpts_system_prompt.md        # ChatGPT GPTs用 System Prompt（汎用版）
 │
+├── 06_knowledge/
+│   └── MANGA_EFFECTS_KNOWLEDGE.md   # 漫画演出効果リファレンス
 └── examples/
     └── aiyla/                       # 記入例：Aiyla & Mini Konshu
 ```
